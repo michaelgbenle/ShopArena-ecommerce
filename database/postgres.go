@@ -336,6 +336,15 @@ func (pdb *PostgresDb) CreateBuyer(user *models.Buyer) (*models.Buyer, error) {
 	return user, err
 }
 
+// ValidateBuyer finds updates buyer status to true
+func (pdb *PostgresDb) ValidateBuyer(email string) error {
+	buyer := &models.Buyer{}
+	if err := pdb.DB.Model(buyer).Where("email =?", email).Update("is_active", true).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
 //CreateBuyerCart creates a new cart for the buyer
 func (pdb *PostgresDb) CreateBuyerCart(cart *models.Cart) (*models.Cart, error) {
 	var err error
