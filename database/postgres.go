@@ -340,7 +340,7 @@ func (pdb *PostgresDb) CreateSeller(user *models.Seller) (*models.Seller, error)
 func (pdb *PostgresDb) CreateBuyer(user *models.Buyer) (*models.Buyer, error) {
 	var err error
 	user.CreatedAt = time.Now()
-	user.IsActive = true
+	user.IsActive = false
 	err = pdb.DB.Create(user).Error
 	return user, err
 }
