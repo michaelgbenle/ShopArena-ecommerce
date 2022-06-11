@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/decadevs/shoparena/models"
 	"github.com/gin-gonic/gin"
@@ -76,11 +78,36 @@ func (h *Handler) BuyerSignUpHandler(c *gin.Context) {
 		})
 		return
 	}
+	h.BuyerSignUpValidation(buyer.Email, c)
 
-	c.JSON(http.StatusCreated, gin.H{
-		"message": "Sign Up Successful",
-	})
+}
 
+func (h *Handler) BuyerSignUpValidation(email string, c *gin.Context) {
+	// generate token that'll be used to reset the password
+	secretString := os.Getenv("JWTSECRET")
+	resetToken, _ := h.Mail.GenerateNonAuthToken(email, secretString)
+	// the link to be clicked in order to perform password reset
+	link := "https://shoparena-frontend.vercel.app/buyer/forgot/" + *resetToken
+	// define the body of the email
+	body := " <a href='" + link + "'>Click here to activate your account</a>"
+	html := "<strong>" + body + "</strong>"
+
+	//initialize the email sendout
+	privateAPIKey := os.Getenv("MAILGUN_API_KEY")
+	yourDomain := os.Getenv("DOMAIN_STRING")
+	err := h.Mail.SendMail("forgot Password", html, email, privateAPIKey, yourDomain)
+
+	//if email was sent return 200 status code
+	if err == nil {
+		c.JSON(200, gin.H{"message": "please check your email for activation link"})
+		c.Abort()
+		return
+	} else {
+		log.Println(err)
+		c.JSON(500, gin.H{"error": "please try again"})
+		c.Abort()
+		return
+	}
 }
 
 func (h *Handler) SellerSignUpHandler(c *gin.Context) {
