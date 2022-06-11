@@ -330,7 +330,7 @@ func (pdb *PostgresDb) CreateSeller(user *models.Seller) (*models.Seller, error)
 // ValidateBuyer finds updates buyer status to true
 func (pdb *PostgresDb) ValidateSeller(email string) error {
 	seller := &models.Buyer{}
-	if err := pdb.DB.Model(buyer).Where("email =?", email).Update("is_active", true).Error; err != nil {
+	if err := pdb.DB.Model(seller).Where("email =?", email).Update("is_active", true).Error; err != nil {
 		return err
 	}
 	return nil
