@@ -328,13 +328,13 @@ func (pdb *PostgresDb) CreateSeller(user *models.Seller) (*models.Seller, error)
 }
 
 // ValidateSeller updates seller status to true
-func (pdb *PostgresDb) ValidateSeller(email string) error {
-	seller := &models.Seller{}
-	if err := pdb.DB.Model(seller).Where("email =?", email).Update("is_active", true).Error; err != nil {
-		return err
-	}
-	return nil
-}
+//func (pdb *PostgresDb) ValidateSeller(email string) error {
+//	seller := &models.Seller{}
+//	if err := pdb.DB.Model(seller).Where("email =?", email).Update("is_active", true).Error; err != nil {
+//		return err
+//	}
+//	return nil
+//}
 
 // CreateBuyer creates a new Buyer in the DB
 func (pdb *PostgresDb) CreateBuyer(user *models.Buyer) (*models.Buyer, error) {
