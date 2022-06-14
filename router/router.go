@@ -38,6 +38,7 @@ func SetupRouter(h *handlers.Handler) (*gin.Engine, string) {
 	apirouter.POST("/loginbuyer", h.LoginBuyerHandler)
 	apirouter.POST("/loginseller", h.LoginSellerHandler)
 	apirouter.POST("/buyersignup", h.BuyerSignUpHandler)
+	apirouter.PUT("/buyer/success", h.BuyerSignUpActivation)
 	apirouter.POST("/sellersignup", h.SellerSignUpHandler)
 	apirouter.GET("/callback", h.Callback)
 

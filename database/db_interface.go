@@ -66,6 +66,7 @@ type DB interface {
 	DeleteAllSellerProducts(sellerID uint) error
 	GetAllSellerOrders(sellerId uint) ([]models.OrderProducts, error)
 	GetAllBuyerOrders(buyerId uint) ([]models.OrderProducts, error)
+	ValidateBuyer(email string) error
 }
 
 // Mailer interface to implement mailing service

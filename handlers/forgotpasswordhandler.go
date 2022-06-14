@@ -78,7 +78,6 @@ func (h *Handler) BuyerForgotPasswordResetHandler(c *gin.Context) {
 
 	// gets the reset token from the dynamic route
 	resetToken, _ := c.GetQuery("reset_token")
-	log.Println(resetToken)
 
 	// decodes token to get user email
 	secretString := os.Getenv("JWTSECRET")
